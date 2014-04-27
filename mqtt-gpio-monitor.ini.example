@@ -1,0 +1,15 @@
+[global]
+MODULE        = <gpio or pfio>
+DEBUG         = True
+
+MQTT_HOST     = localhost
+MQTT_PORT     = 1833
+MQTT_USERNAME = 
+MQTT_PASSWORD = 
+MQTT_TOPIC    = /mqtt-gpio-monitor
+MQTT_QOS      = 2
+MQTT_RETAIN   = False
+MQTT_LWT      = /clients/mqtt-gpio-monitor
+
+MONITOR_PINS  = 1, 2, 3, 4
+MONITOR_POLL  = 0.1
