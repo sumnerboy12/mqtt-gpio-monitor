@@ -122,9 +122,9 @@ def on_connect(mosq, obj, result_code):
         # Subscribe to our incoming topic
         mqttc.subscribe(MQTT_TOPIC_IN, qos=MQTT_QOS)
         
-        # Subscribe to the monito refesh topic if required
+        # Subscribe to the monitor refesh topic if required
         if MONITOR_REFRESH:
-            mqttc.subscribe(MONITOR_REFRESH, qos=MQTT_QOS)
+            mqttc.subscribe(MONITOR_REFRESH, qos=0)
 
         # Publish retained LWT as per http://stackoverflow.com/q/97694
         # See also the will_set function in connect() below
