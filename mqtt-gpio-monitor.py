@@ -132,31 +132,25 @@ def on_connect(mosq, obj, result_code):
 
     elif result_code == 1:
         logging.info("Connection refused - unacceptable protocol version")
-        cleanup(0)
     elif result_code == 2:
         logging.info("Connection refused - identifier rejected")
-        cleanup(0)
     elif result_code == 3:
         logging.info("Connection refused - server unavailable")
-        cleanup(0)
     elif result_code == 4:
         logging.info("Connection refused - bad user name or password")
-        cleanup(0)
     elif result_code == 5:
         logging.info("Connection refused - not authorised")
-        cleanup(0)
     else:
         logging.warning("Connection failed - result code %d" % (result_code))
-        cleanup(0)
 
 def on_disconnect(mosq, obj, result_code):
     """
     Handle disconnections from the broker
     """
     if result_code == 0:
-        logging.info("Clean disconnection")
+        logging.info("Clean disconnection from broker")
     else:
-        logging.info("Unexpected disconnection. Retrying in 5s...")
+        logging.info("Broker connection lost. Retrying in 5s...")
         time.sleep(5)
 
 def on_message(mosq, obj, msg):
@@ -241,15 +235,10 @@ def connect():
     # Attempt to connect
     logging.debug("Connecting to %s:%d..." % (MQTT_HOST, MQTT_PORT))
     try:
-        result = mqttc.connect(MQTT_HOST, MQTT_PORT, 60)
+        mqttc.connect(MQTT_HOST, MQTT_PORT, 60)
     except Exception, e:
         logging.error("Error connecting to %s:%d: %s" % (MQTT_HOST, MQTT_PORT, str(e)))
         sys.exit(2)
-
-    if result != 0:
-        logging.info("Connection to %s:%d failed with error code %s. Retrying in 10s..." % (MQTT_HOST, MQTT_PORT, result))
-        time.sleep(10)
-        connect()
 
     # Let the connection run forever
     mqttc.loop_start()
