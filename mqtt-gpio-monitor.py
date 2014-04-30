@@ -41,6 +41,7 @@ MQTT_LWT = config.get("global", "mqtt_lwt")
 
 MONITOR_PINS = config.get("global", "monitor_pins")
 MONITOR_POLL = config.getfloat("global", "monitor_poll")
+MONITOR_REFRESH = config.get("global", "monitor_refresh")
 
 # Initialise logging
 LOGFORMAT = '%(asctime)-15s %(levelname)-5s %(message)s'
@@ -120,6 +121,10 @@ def on_connect(mosq, obj, result_code):
 
         # Subscribe to our incoming topic
         mqttc.subscribe(MQTT_TOPIC_IN, qos=MQTT_QOS)
+        
+        # Subscribe to the monito refesh topic if required
+        if MONITOR_REFRESH:
+            mqttc.subscribe(MONITOR_REFRESH, qos=MQTT_QOS)
 
         # Publish retained LWT as per http://stackoverflow.com/q/97694
         # See also the will_set function in connect() below
@@ -158,6 +163,11 @@ def on_message(mosq, obj, msg):
     """
     Handle incoming messages
     """
+    if msg.topic == MONITOR_REFRESH:
+        logging.debug("Refreshing the state of all monitored pins...")
+        refresh()
+        return
+        
     topicparts = msg.topic.split("/")
     pin = int(topicparts[len(topicparts) - 1])
     value = int(msg.payload)
@@ -266,6 +276,24 @@ def init_gpio():
 
         logger.debug("Initialising GPIO input pin %d..." % (pin))
         GPIO.setup(pin, GPIO.IN)
+
+
+def refresh():
+    """
+    Refresh the state of all pins we are monitoring
+    """
+    for PIN in PINS:
+        index = [y[0] for y in PINS].index(PIN[0])
+        pin = PINS[index][0]
+
+        if PFIO_MODULE:
+            state = PFIO.digital_read(pin)
+        
+        if GPIO_MODULE:
+            state = GPIO.input(pin)
+
+        logging.debug("Refreshing pin %d state -> %d" % (pin, state))
+        mqttc.publish(MQTT_TOPIC_OUT % pin, payload=state, qos=MQTT_QOS, retain=MQTT_RETAIN)
 
 
 def poll():
