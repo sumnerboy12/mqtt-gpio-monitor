@@ -38,7 +38,7 @@ MQTT_CLIENT_ID = config.get("global", "mqtt_client_id")
 MQTT_TOPIC = config.get("global", "mqtt_topic")
 MQTT_QOS = config.getint("global", "mqtt_qos")
 MQTT_RETAIN = config.getboolean("global", "mqtt_retain")
-MQTT_CLEAN_SESSION = config.getboolen("global", "mqtt_clean_session")
+MQTT_CLEAN_SESSION = config.getboolean("global", "mqtt_clean_session")
 MQTT_LWT = config.get("global", "mqtt_lwt")
 
 MONITOR_PINS = config.get("global", "monitor_pins")
