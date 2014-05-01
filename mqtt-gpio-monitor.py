@@ -34,9 +34,11 @@ MQTT_HOST = config.get("global", "mqtt_host")
 MQTT_PORT = config.getint("global", "mqtt_port")
 MQTT_USERNAME = config.get("global", "mqtt_username")
 MQTT_PASSWORD = config.get("global", "mqtt_password")
+MQTT_CLIENT_ID = config.get("global", "mqtt_client_id")
 MQTT_TOPIC = config.get("global", "mqtt_topic")
 MQTT_QOS = config.getint("global", "mqtt_qos")
 MQTT_RETAIN = config.getboolean("global", "mqtt_retain")
+MQTT_CLEAN_SESSION = config.getboolen("global", "mqtt_clean_session")
 MQTT_LWT = config.get("global", "mqtt_lwt")
 
 MONITOR_PINS = config.get("global", "monitor_pins")
@@ -95,11 +97,15 @@ else:
 for PIN in PINS:
     PINS[PINS.index(PIN)] = [PIN, -1]
 
-# Create the MQTT client
-MQTT_CLIENT_ID = APPNAME + "_%d" % os.getpid()
 MQTT_TOPIC_IN = MQTT_TOPIC + "/in/+"
 MQTT_TOPIC_OUT = MQTT_TOPIC + "/out/%d"
-mqttc = mosquitto.Mosquitto(MQTT_CLIENT_ID)
+
+# Create the MQTT client
+if not MQTT_CLIENT_ID:
+    MQTT_CLIENT_ID = APPNAME + "_%d" % os.getpid()
+    MQTT_CLEAN_SESSION = True
+    
+mqttc = mosquitto.Mosquitto(MQTT_CLIENT_ID, clean_session=MQTT_CLEAN_SESSION)
 
 # MQTT callbacks
 def on_connect(mosq, obj, result_code):
@@ -126,7 +132,7 @@ def on_connect(mosq, obj, result_code):
         if MONITOR_REFRESH:
             mqttc.subscribe(MONITOR_REFRESH, qos=0)
 
-        # Publish retained LWT as per http://stackoverflow.com/q/97694
+        # Publish retained LWT as per http://stackoverflow.com/questions/19057835/how-to-find-connected-mqtt-client-details/19071979#19071979
         # See also the will_set function in connect() below
         mqttc.publish(MQTT_LWT, "1", qos=0, retain=True)
 
