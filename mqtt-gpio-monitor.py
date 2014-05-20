@@ -66,7 +66,7 @@ logging.debug("LOGFILE = %s" % LOGFILE)
 # Check we have the necessary module
 if MODULE.lower() == "pfio":
     try:
-        import piface.pfio as PFIO
+        import pifacedigitalio as PFIO
         logging.info("PiFace.PFIO module detected...")
         PFIO_MODULE = True
     except ImportError:
