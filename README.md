@@ -18,15 +18,9 @@ If using the PiFace extension board you will need to do the following;
 
 If just using the raw GPIO pins then the RPi.GPIO module should be installed as part of Raspbian.
 
-You will also need an MQTT broker, in this case Mosquitto. To install;
+You will also need an MQTT broker, in this case Paho. To install;
 
-    curl -O http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
-    sudo apt-key add mosquitto-repo.gpg.key
-    rm mosquitto-repo.gpg.key
-    cd /etc/apt/sources.list.d/
-    sudo curl -O http://repo.mosquitto.org/debian/mosquitto-repo.list
-    sudo apt-get update
-    sudo apt-get install python-mosquitto
+    sudo pip install paho-mqtt
 
 You should now be ready to run the script. It will listen for incoming messages on <topic>/in/+ (where <topic> is specified in the INI file). The incoming messages need to arrive on <topic>/in/<pin> with a value of either 1 or 0. 
 
