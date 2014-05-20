@@ -26,3 +26,5 @@ Depending on what is set for MONITOR_PINS in the INI file, the script will also 
 E.g. if pin 7 changes from 1 to 0 a message would be published to {topic}/out/7 with a value of 1.
 
 So you are able to both monitor pins as well as set pins HIGH/LOW. Obviously you can't do both monitor and update for the same pin.
+
+The last option in the INI file is MONITOR_REFRESH, which is a special topic the script will subscribe to if specified. Any message arriving on that topic will trigger the script to re-send publishes with the current state of all monitored pins. This is useful for requesting the current state of all pins if the calling system is restarted for example.
