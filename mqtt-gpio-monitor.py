@@ -11,7 +11,7 @@ import sys
 import time
 
 import ConfigParser
-import mosquitto
+import paho.mqtt.client as mqtt
 
 PFIO_MODULE = False
 GPIO_MODULE = False
@@ -105,7 +105,7 @@ if not MQTT_CLIENT_ID:
     MQTT_CLIENT_ID = APPNAME + "_%d" % os.getpid()
     MQTT_CLEAN_SESSION = True
     
-mqttc = mosquitto.Mosquitto(MQTT_CLIENT_ID, clean_session=MQTT_CLEAN_SESSION)
+mqttc = mqtt.Client(MQTT_CLIENT_ID, clean_session=MQTT_CLEAN_SESSION)
 
 # MQTT callbacks
 def on_connect(mosq, obj, result_code):
