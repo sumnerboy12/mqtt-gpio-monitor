@@ -7,14 +7,9 @@ This was written for use on a RaspberryPi, with either the PiFace extension boar
 
 The example INI file contains the only configuration required. You must define the module to use, either GPIO or PFIO. Depending on which you will need to ensure the appropriate Python module is installed.
 
-If using the PiFace extension board you will need to do the following;
+If using the PiFace extension board you will need to follow the instructions [here](http://piface.github.io/pifacedigitalio/installation.html) to install the digital IO libraries;
 
-    sudo apt-get install python-dev python-gtk2-dev git
-    git clone https://github.com/thomasmacpherson/piface.git
-    cd ~/piface/python/
-    sudo python setup.py install
-    cd ~/
-    sudo ./piface/scripts/spidev-setup
+    sudo apt-get install python-pifacedigitalio
 
 If just using the raw GPIO pins then the RPi.GPIO module should be installed as part of Raspbian.
 
