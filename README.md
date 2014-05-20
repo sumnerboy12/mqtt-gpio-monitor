@@ -17,12 +17,12 @@ You will also need an MQTT client, in this case [Paho](https://pypi.python.org/p
 
     sudo pip install paho-mqtt
 
-You should now be ready to run the script. It will listen for incoming messages on <topic>/in/+ (where <topic> is specified in the INI file). The incoming messages need to arrive on <topic>/in/<pin> with a value of either 1 or 0. 
+You should now be ready to run the script. It will listen for incoming messages on {topic}/in/+ (where {topic} is specified in the INI file). The incoming messages need to arrive on {topic}/in/{pin} with a value of either 1 or 0. 
 
-E.g. a message arriving on <topic>/in/3 with value 1 will set pin 3 to HIGH. 
+E.g. a message arriving on {topic}/in/3 with value 1 will set pin 3 to HIGH. 
 
-Depending on what is set for MONITOR_PINS in the INI file, the script will also monitor these pins and if there are any changes publish a message on <topic>/out/<pin> with a value of either 1 or 0.
+Depending on what is set for MONITOR_PINS in the INI file, the script will also monitor these pins and if there are any changes publish a message on {topic}/out/{pin} with a value of either 1 or 0.
 
-E.g. if pin 7 changes from 1 to 0 a message would be published to <topic>/out/7 with a value of 1.
+E.g. if pin 7 changes from 1 to 0 a message would be published to {topic}/out/7 with a value of 1.
 
 So you are able to both monitor pins as well as set pins HIGH/LOW. Obviously you can't do both monitor and update for the same pin.
