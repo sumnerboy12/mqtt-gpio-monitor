@@ -13,7 +13,7 @@ If using the PiFace extension board you will need to follow the instructions [he
 
 If just using the raw GPIO pins then the RPi.GPIO module should be installed as part of Raspbian.
 
-You will also need an MQTT broker, in this case Paho. To install;
+You will also need an MQTT client, in this case [Paho](https://pypi.python.org/pypi/paho-mqtt/0.9). To install;
 
     sudo pip install paho-mqtt
 
