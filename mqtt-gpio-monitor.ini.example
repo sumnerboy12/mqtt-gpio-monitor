@@ -7,10 +7,11 @@ MQTT_PORT          = 1833
 MQTT_USERNAME      = 
 MQTT_PASSWORD      = 
 MQTT_CLIENT_ID     = mqtt-gpio-monitor
-MQTT_TOPIC         = /mqtt-gpio-monitor
 MQTT_QOS           = 2
 MQTT_RETAIN        = False
 MQTT_CLEAN_SESSION = True
+
+MQTT_TOPIC         = /mqtt-gpio-monitor
 MQTT_LWT           = /clients/mqtt-gpio-monitor
 
 MONITOR_PINS       = 1, 2, 3, 4
