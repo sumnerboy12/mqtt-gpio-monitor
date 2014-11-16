@@ -70,7 +70,7 @@ if MODULE.lower() == "pfio":
         logging.info("PiFace.PFIO module detected...")
         PFIO_MODULE = True
     except ImportError:
-        logger.error("Module = %s in %s but PiFace.PFIO module was not found" % (MODULE, INIFILE))
+        logging.error("Module = %s in %s but PiFace.PFIO module was not found" % (MODULE, INIFILE))
         sys.exit(2)
 
 if MODULE.lower() == "gpio":
@@ -79,7 +79,7 @@ if MODULE.lower() == "gpio":
         logging.info("RPi.GPIO module detected...")
         GPIO_MODULE = True
     except ImportError:
-        logger.error("Module = %s in %s but RPi.GPIO module was not found" % (MODULE, INIFILE))
+        logging.error("Module = %s in %s but RPi.GPIO module was not found" % (MODULE, INIFILE))
         sys.exit(2)
 
 # Convert the list of strings to a list of ints.
@@ -261,7 +261,6 @@ def init_gpio():
     """
     Initialise the GPIO library
     """
-    GPIO.cleanup()
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
 
@@ -269,7 +268,7 @@ def init_gpio():
         index = [y[0] for y in PINS].index(PIN[0])
         pin = PINS[index][0]
 
-        logger.debug("Initialising GPIO input pin %d..." % (pin))
+        logging.debug("Initialising GPIO input pin %d..." % (pin))
         GPIO.setup(pin, GPIO.IN)
 
 
