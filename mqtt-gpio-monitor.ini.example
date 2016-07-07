@@ -3,7 +3,7 @@ MODULE             = <gpio or pfio>
 DEBUG              = True
 
 MQTT_HOST          = localhost
-MQTT_PORT          = 1833
+MQTT_PORT          = 1883
 MQTT_USERNAME      = 
 MQTT_PASSWORD      = 
 MQTT_CLIENT_ID     = mqtt-gpio-monitor
