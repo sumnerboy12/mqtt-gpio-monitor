@@ -43,6 +43,7 @@ MQTT_LWT = config.get("global", "mqtt_lwt")
 
 MONITOR_PINS = config.get("global", "monitor_pins", raw=True)
 MONITOR_PIN_NUMBERING = config.get("global", "monitor_pin_numbering")     # BCM or BOARD
+MONITOR_OUT_INVERT = config.get("global", "monitor_out_invert")
 MONITOR_POLL = config.getfloat("global", "monitor_poll")
 MONITOR_REFRESH = config.get("global", "monitor_refresh")
 
@@ -285,6 +286,10 @@ def read_pin(pin):
     if GPIO_MODULE:
         state = GPIO.input(pin)
 
+    if MONITOR_OUT_INVERT:
+        if state == 0:
+            state = 1
+            state = 0
     return(state)
 
 
