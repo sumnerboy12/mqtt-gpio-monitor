@@ -277,6 +277,16 @@ def init_gpio():
         logging.debug("Initialising GPIO input pin %d..." % (pin))
         GPIO.setup(pin, GPIO.IN)
 
+def read_pin(pin):
+    state = -1
+    if PFIO_MODULE:
+        state = PFIO.digital_read(pin)
+        
+    if GPIO_MODULE:
+        state = GPIO.input(pin)
+
+    return(state)
+
 
 def refresh():
     """
@@ -285,12 +295,7 @@ def refresh():
     for PIN in PINS:
         index = [y[0] for y in PINS].index(PIN[0])
         pin = PINS[index][0]
-
-        if PFIO_MODULE:
-            state = PFIO.digital_read(pin)
-        
-        if GPIO_MODULE:
-            state = GPIO.input(pin)
+        state = read_pin(pin)
 
         logging.debug("Refreshing pin %d state -> %d" % (pin, state))
         mqttc.publish(MQTT_TOPIC_OUT % pin, payload=state, qos=MQTT_QOS, retain=MQTT_RETAIN)
@@ -306,12 +311,7 @@ def poll():
             index = [y[0] for y in PINS].index(PIN[0])
             pin = PINS[index][0]
             oldstate = PINS[index][1]
-
-            if PFIO_MODULE:
-                newstate = PFIO.digital_read(pin)
-            
-            if GPIO_MODULE:
-                newstate = GPIO.input(pin)
+            newstate = read_pin(pin)
 
             if newstate != oldstate:
                 logging.debug("Pin %d changed from %d to %d" % (pin, oldstate, newstate))
