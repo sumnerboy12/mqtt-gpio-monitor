@@ -1,7 +1,7 @@
 mqtt-gpio-monitor
 =================
 
-Python script for sending/receiving commands to/from GPIO pins via MQTT messages.
+Python 3 script for sending/receiving commands to/from GPIO pins via MQTT messages.
 
 This was written for use on a RaspberryPi, with either the PiFace extension board, or just raw access to the GPIO pins. 
 
