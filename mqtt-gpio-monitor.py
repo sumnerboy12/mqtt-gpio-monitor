@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 __author__ = "Ben Jones"
 __copyright__ = "Copyright (C) Ben Jones"
@@ -10,7 +10,7 @@ import socket
 import sys
 import time
 
-import ConfigParser
+import configparser
 import paho.mqtt.client as mqtt
 
 PFIO_MODULE = False
@@ -23,7 +23,7 @@ INIFILE = os.getenv('INIFILE', APPNAME + '.ini')
 LOGFILE = os.getenv('LOGFILE', APPNAME + '.log')
 
 # Read the config file
-config = ConfigParser.RawConfigParser()
+config = configparser.ConfigParser()
 config.read(INIFILE)
 
 # Use ConfigParser to pick out the settings
@@ -41,7 +41,8 @@ MQTT_RETAIN = config.getboolean("global", "mqtt_retain")
 MQTT_CLEAN_SESSION = config.getboolean("global", "mqtt_clean_session")
 MQTT_LWT = config.get("global", "mqtt_lwt")
 
-MONITOR_PINS = config.get("global", "monitor_pins")
+MONITOR_PINS = config.get("global", "monitor_pins", raw=True)
+MONITOR_PIN_NUMBERING = config.get("global", "monitor_pin_numbering")     # BCM or BOARD
 MONITOR_POLL = config.getfloat("global", "monitor_poll")
 MONITOR_REFRESH = config.get("global", "monitor_refresh")
 
@@ -86,7 +87,7 @@ if MODULE.lower() == "gpio":
 # Also strips any whitespace padding
 PINS = []
 if MONITOR_PINS:
-    PINS = map(int, MONITOR_PINS.split(","))
+    PINS.extend(list(map(int, MONITOR_PINS.split(","))))
 
 if len(PINS) == 0:
     logging.debug("Not monitoring any pins")
@@ -242,7 +243,7 @@ def connect():
     logging.debug("Connecting to %s:%d..." % (MQTT_HOST, MQTT_PORT))
     try:
         mqttc.connect(MQTT_HOST, MQTT_PORT, 60)
-    except Exception, e:
+    except Exception as e:
         logging.error("Error connecting to %s:%d: %s" % (MQTT_HOST, MQTT_PORT, str(e)))
         sys.exit(2)
 
@@ -262,7 +263,12 @@ def init_gpio():
     Initialise the GPIO library
     """
     GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BOARD)
+    if MONITOR_PIN_NUMBERING == "BCM":
+        logging.debug("Initialising GPIO using BCM numbering")
+        GPIO.setmode(GPIO.BCM)
+    else:
+        logging.debug("Initialising GPIO using Board numbering")
+        GPIO.setmode(GPIO.BOARD)
 
     for PIN in PINS:
         index = [y[0] for y in PINS].index(PIN[0])
