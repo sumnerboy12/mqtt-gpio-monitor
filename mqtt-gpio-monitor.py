@@ -42,6 +42,7 @@ MQTT_CLEAN_SESSION = config.getboolean("global", "mqtt_clean_session")
 MQTT_LWT = config.get("global", "mqtt_lwt")
 
 MONITOR_PINS = config.get("global", "monitor_pins", raw=True)
+MONITOR_PINS_PUD = config.get("global", "monitor_pins_pud")               # UP, DOWN or unset
 MONITOR_PIN_NUMBERING = config.get("global", "monitor_pin_numbering")     # BCM or BOARD
 MONITOR_OUT_INVERT = config.get("global", "monitor_out_invert")
 MONITOR_POLL = config.getfloat("global", "monitor_poll")
@@ -276,7 +277,12 @@ def init_gpio():
         pin = PINS[index][0]
 
         logging.debug("Initialising GPIO input pin %d..." % (pin))
-        GPIO.setup(pin, GPIO.IN)
+        if MONITOR_PINS_PUD == "UP":
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        elif MONITOR_PINS_PUD == "DOWN":
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        else
+            GPIO.setup(pin, GPIO.IN)
 
 def read_pin(pin):
     state = -1
