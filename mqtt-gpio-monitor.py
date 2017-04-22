@@ -281,7 +281,7 @@ def init_gpio():
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         elif MONITOR_PINS_PUD == "DOWN":
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        else
+        else:
             GPIO.setup(pin, GPIO.IN)
 
 def read_pin(pin):
