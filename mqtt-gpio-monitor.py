@@ -289,6 +289,7 @@ def read_pin(pin):
     if MONITOR_OUT_INVERT:
         if state == 0:
             state = 1
+        elif state == 1:
             state = 0
     return(state)
 
