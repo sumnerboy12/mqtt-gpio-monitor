@@ -1,7 +1,7 @@
 mqtt-gpio-monitor
 =================
 
-Python script for sending/receiving commands to/from GPIO pins via MQTT messages.
+Python 3 script for sending/receiving commands to/from GPIO pins via MQTT messages.
 
 This was written for use on a RaspberryPi, with either the PiFace extension board, or just raw access to the GPIO pins. 
 
@@ -9,7 +9,7 @@ The example INI file contains the only configuration required. You must define t
 
 If using the PiFace extension board you will need to follow the instructions [here](http://piface.github.io/pifacedigitalio/installation.html) to install the digital IO libraries;
 
-    sudo apt-get install python-pifacedigitalio
+    sudo apt-get install python3-pifacedigitalio
 
 If just using the raw GPIO pins then the RPi.GPIO module should be installed as part of Raspbian.
 
@@ -26,5 +26,11 @@ Depending on what is set for MONITOR_PINS in the INI file, the script will also 
 E.g. if pin 7 changes from 1 to 0 a message would be published to {topic}/out/7 with a value of 1.
 
 So you are able to both monitor pins as well as set pins HIGH/LOW. Obviously you can't do both monitor and update for the same pin.
+
+Control the pull up resistors using MONITOR_PINS_PUD set to either UP, DOWN or nothing.
+
+Set the pin numbering to either BOARD or BCM (broadcom) using MONITOR_PIN_NUMBERING.
+
+Invert the output of pins using MONITOR_OUT_INVERT.  i.e. high is read as 0 instead of 1 and vice-versa.
 
 The last option in the INI file is MONITOR_REFRESH, which is a special topic the script will subscribe to if specified. Any message arriving on that topic will trigger the script to re-send publishes with the current state of all monitored pins. This is useful for requesting the current state of all pins if the calling system is restarted for example.
