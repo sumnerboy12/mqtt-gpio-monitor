@@ -36,6 +36,7 @@ MQTT_USERNAME = config.get("global", "mqtt_username")
 MQTT_PASSWORD = config.get("global", "mqtt_password")
 MQTT_CERT_PATH = config.get("global", "mqtt_cert_path")
 MQTT_TLS_INSECURE = config.get("global", "mqtt_tls_insecure")
+MQTT_TLS_PROTOCOL = config.get("global", "mqtt_tls_protocol")
 MQTT_CLIENT_ID = config.get("global", "mqtt_client_id")
 MQTT_TOPIC = config.get("global", "mqtt_topic")
 MQTT_QOS = config.getint("global", "mqtt_qos")
@@ -241,10 +242,20 @@ def connect():
         mqttc.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
 
     # Set TLS details
-    if MQTT_CERT_PATH:
-        mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
-        mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_TLSv1_2)
-
+    if MQTT_TLS_PROTOCOL is not None:
+        if MQTT_TLS_PROTOCOL == 'tlsv1_2':
+            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
+            mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_TLSv1_2)
+        if MQTT_TLS_PROTOCOL == 'tlsv1_1':
+            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
+            mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_TLSv1_1)
+        if MQTT_TLS_PROTOCOL == 'tlsv1':
+            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
+            mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_TLSv1)
+        if MQTT_TLS_PROTOCOL == 'sslv3':
+            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
+            mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_SSLv3)
+    
     # Set the Last Will and Testament (LWT) *before* connecting
     mqttc.will_set(MQTT_LWT, payload="0", qos=0, retain=True)
 
