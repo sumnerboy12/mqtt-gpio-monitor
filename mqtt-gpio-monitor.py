@@ -242,7 +242,7 @@ def connect():
         mqttc.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
 
     # Set TLS details
-    if MQTT_TLS_PROTOCOL is not None:
+    if MQTT_TLS_PROTOCOL:
         if MQTT_TLS_PROTOCOL == 'tlsv1_2':
             mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
             mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_TLSv1_2)
