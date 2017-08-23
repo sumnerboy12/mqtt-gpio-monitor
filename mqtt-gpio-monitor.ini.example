@@ -6,6 +6,7 @@ MQTT_HOST          = localhost
 MQTT_PORT          = 8883
 MQTT_USERNAME      = 
 MQTT_PASSWORD      = 
+MQTT_TLS_PROTOCOL  = tlsv1_2
 MQTT_CERT_PATH     = /path/to/ca.pem 
 MQTT_TLS_INSECURE  = False
 MQTT_CLIENT_ID     = mqtt-gpio-monitor
