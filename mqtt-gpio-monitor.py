@@ -47,7 +47,7 @@ MQTT_LWT = config.get("global", "mqtt_lwt")
 MONITOR_PINS = config.get("global", "monitor_pins", raw=True)
 MONITOR_PINS_PUD = config.get("global", "monitor_pins_pud")               # UP, DOWN or unset
 MONITOR_PIN_NUMBERING = config.get("global", "monitor_pin_numbering")     # BCM or BOARD
-MONITOR_OUT_INVERT = config.get("global", "monitor_out_invert")
+MONITOR_OUT_INVERT = config.getboolean("global", "monitor_out_invert")
 MONITOR_POLL = config.getfloat("global", "monitor_poll")
 MONITOR_REFRESH = config.get("global", "monitor_refresh")
 
