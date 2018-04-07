@@ -4,18 +4,22 @@ DEBUG              = True
 
 MQTT_HOST          = localhost
 MQTT_PORT          = 1883
-MQTT_USERNAME      = 
-MQTT_PASSWORD      = 
-#MQTT_TLS_PROTOCOL  = tlsv1_2
-#MQTT_CERT_PATH     = /path/to/ca.pem 
-#MQTT_TLS_INSECURE  = False
 MQTT_CLIENT_ID     = mqtt-gpio-monitor
 MQTT_QOS           = 2
 MQTT_RETAIN        = False
 MQTT_CLEAN_SESSION = True
-
 MQTT_TOPIC         = /mqtt-gpio-monitor
 MQTT_LWT           = /clients/mqtt-gpio-monitor
+
+# authentication (optional)
+MQTT_USERNAME      = 
+MQTT_PASSWORD      = 
+
+# tls protocol (optional) [one of tlsv1_2, tlsv1_1, tlsv1, sslv3]
+MQTT_TLS_PROTOCOL  = 
+# tls_insecure and cert_path mandatory if tls_protocol specified
+MQTT_TLS_INSECURE  = False
+MQTT_CERT_PATH     = 
 
 MONITOR_PINS       = 1, 2, 3, 4
 MONITOR_PINS_PUD   = UP

@@ -32,17 +32,19 @@ DEBUG = config.getboolean("global", "debug")
 
 MQTT_HOST = config.get("global", "mqtt_host")
 MQTT_PORT = config.getint("global", "mqtt_port")
-MQTT_USERNAME = config.get("global", "mqtt_username")
-MQTT_PASSWORD = config.get("global", "mqtt_password")
-MQTT_CERT_PATH = config.get("global", "mqtt_cert_path")
-MQTT_TLS_INSECURE = config.get("global", "mqtt_tls_insecure")
-MQTT_TLS_PROTOCOL = config.get("global", "mqtt_tls_protocol")
 MQTT_CLIENT_ID = config.get("global", "mqtt_client_id")
-MQTT_TOPIC = config.get("global", "mqtt_topic")
 MQTT_QOS = config.getint("global", "mqtt_qos")
 MQTT_RETAIN = config.getboolean("global", "mqtt_retain")
 MQTT_CLEAN_SESSION = config.getboolean("global", "mqtt_clean_session")
+MQTT_TOPIC = config.get("global", "mqtt_topic")
 MQTT_LWT = config.get("global", "mqtt_lwt")
+
+MQTT_USERNAME = config.get("global", "mqtt_username", fallback=None)
+MQTT_PASSWORD = config.get("global", "mqtt_password", fallback=None)
+
+MQTT_TLS_PROTOCOL = config.get("global", "mqtt_tls_protocol", fallback=None)
+MQTT_TLS_INSECURE = config.get("global", "mqtt_tls_insecure", fallback=False)
+MQTT_CERT_PATH = config.get("global", "mqtt_cert_path", fallback=None)
 
 MONITOR_PINS = config.get("global", "monitor_pins", raw=True)
 MONITOR_PINS_PUD = config.get("global", "monitor_pins_pud")               # UP, DOWN or unset
