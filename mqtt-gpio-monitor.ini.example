@@ -8,8 +8,8 @@ MQTT_CLIENT_ID     = mqtt-gpio-monitor
 MQTT_QOS           = 2
 MQTT_RETAIN        = False
 MQTT_CLEAN_SESSION = True
-MQTT_TOPIC         = /mqtt-gpio-monitor
-MQTT_LWT           = /clients/mqtt-gpio-monitor
+MQTT_TOPIC         = mqtt-gpio-monitor
+MQTT_LWT           = clients/mqtt-gpio-monitor
 
 # authentication (optional)
 MQTT_USERNAME      = 
@@ -26,4 +26,4 @@ MONITOR_PINS_PUD   = UP
 MONITOR_PIN_NUMBERING = BOARD
 MONITOR_OUT_INVERT = False
 MONITOR_POLL       = 0.1
-MONITOR_REFRESH    = /mqtt-gpio-monitor/refresh
+MONITOR_REFRESH    = mqtt-gpio-monitor/refresh
