@@ -246,17 +246,17 @@ def connect():
     # Set TLS details
     if MQTT_TLS_PROTOCOL:
         if MQTT_TLS_PROTOCOL == 'tlsv1_2':
-            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
             mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_TLSv1_2)
+            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
         if MQTT_TLS_PROTOCOL == 'tlsv1_1':
-            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
             mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_TLSv1_1)
+            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
         if MQTT_TLS_PROTOCOL == 'tlsv1':
-            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
             mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_TLSv1)
-        if MQTT_TLS_PROTOCOL == 'sslv3':
             mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
+        if MQTT_TLS_PROTOCOL == 'sslv3':
             mqttc.tls_set(MQTT_CERT_PATH, tls_version=ssl.PROTOCOL_SSLv3)
+            mqttc.tls_insecure_set(MQTT_TLS_INSECURE)
     
     # Set the Last Will and Testament (LWT) *before* connecting
     mqttc.will_set(MQTT_LWT, payload="0", qos=0, retain=True)
