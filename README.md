@@ -15,7 +15,21 @@ If just using the raw GPIO pins then the RPi.GPIO module should be installed as 
 
 You will also need an MQTT client, in this case [Paho](https://pypi.python.org/pypi/paho-mqtt/0.9). To install;
 
-    sudo pip install paho-mqtt
+    sudo pip3 install paho-mqtt
+
+On Rapsbian Stretch, the kernel's SPI driver changed the default serial speed from 500Khz to 125Mhz.   The pifacedigitalio SPI doesn't initialize the SPI speed or ioctl() option so we have to to edit the spi.py file manually.
+
+    sudo nano /usr/lib/python3/dist-packages/pifacecommon/spi.py
+
+Change the spi transfer struct section to match the following.
+
+    # create the spi transfer struct
+        transfer = spi_ioc_transfer(
+            tx_buf=ctypes.addressof(wbuffer),
+            rx_buf=ctypes.addressof(rbuffer),
+            len=ctypes.sizeof(wbuffer),
+            speed_hz=ctypes.c_uint32(15000)
+        )
 
 You should now be ready to run the script. It will listen for incoming messages on {topic}/in/+ (where {topic} is specified in the INI file). The incoming messages need to arrive on {topic}/in/{pin} with a value of either 1 or 0. 
 
