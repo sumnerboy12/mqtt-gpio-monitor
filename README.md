@@ -1,3 +1,6 @@
+### THIS REPOSITORY IS NO LONGER SUPPORTED OR MAINTAINED ###
+
+
 mqtt-gpio-monitor
 =================
 
